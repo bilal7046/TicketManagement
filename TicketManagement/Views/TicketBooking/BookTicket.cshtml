@@ -5,7 +5,7 @@
 }
 
 
-<div class="container">
+@* <div class="container">
     <div class="header">
         <h1>Book Your Ticket</h1>
     </div>
@@ -68,8 +68,232 @@
 
         <button type="submit" id="btnSubmit"  class="btn-book">Book</button>
     </form>
-</div>
+</div> *@
 
+<style>
+
+
+
+
+.header {
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('header-image.jpg') center/cover no-repeat;
+    height: 150px;
+    color: #fff;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 60px;
+    margin-bottom: 20px;
+}
+
+.content {
+    padding: 20px;
+    margin:0 50px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+    /* font-weight: bold; */
+    font-weight: 550;
+}
+
+input, select, .promo-btn {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.radio-group label {
+    flex: 1 0 45%;
+    margin: 5px 0;
+    font-weight: 550;
+    font-size: 14px;
+}
+
+.promo-btn {
+    width: auto; /* Set button width to auto */
+    padding: 10px 20px; /* Set padding to make the button smaller */
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 40px; /* Match the height with input */
+    margin-left: 10px; /* Space between input and button */
+}
+
+.promo-btn:hover {
+    background: #0056b3;
+}
+
+.total-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+.discount-price {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 13px 0;
+}
+
+.book-btn {
+    width: auto; /* Set width to auto to make the button smaller */
+    padding: 10px 40px; /* Adjust padding for a smaller button */
+    font-size: 16px; /* Adjust font size */
+    background: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-self: center; /* Align to the left */
+}
+
+.book-btn:hover {
+    background: #0056b3;
+}
+
+.note {
+    font-size: 14px;
+    color: #555;
+    text-align: justify;
+    /* margin-top: 10px ; */
+    margin: 30px 0;
+}
+
+/* Adjusting widths for email, date of birth, and promo code */
+.form-group {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+input[type="email"], 
+input[type="date"], 
+#promo-code {
+    width: 48%; /* Adjust the width as needed */
+}
+
+/* Ensure input and button are aligned on small screens */
+@@media (max-width: 768px) {
+    .promo-btn {
+        width: auto;
+        padding: 10px 20px;
+    }
+
+    .radio-group label {
+        flex: 1 0 100%;
+    }
+
+    .form-group {
+        flex-direction: column;
+    }
+
+    input[type="email"], 
+    input[type="date"], 
+    #promo-code {
+        width: 100%;
+    }
+
+    .promo-container {
+        display: flex;
+        gap: 10px;
+    }
+}
+</style>
+<div class="container">
+    <div class="header">
+        <h1>Title</h1>
+    </div>
+    <div class="content">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <p class="note">New Year Event</p>
+            <label for="first-name">Your Name *</label>
+            <div style="display: flex; gap: 10px;">
+                <div style="display: flex; flex-direction: column;">
+                    <input type="text" id="first-name" placeholder="First Name" asp-for="FirstName">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <input type="text" id="last-name" placeholder="Last Name" asp-for="LastName">
+                    <!-- Validation message -->
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <label for="email">E-mail *</label>
+            <div class="form-group" style="display: flex; flex-direction: column;">
+                <input type="email" id="email" placeholder="email@example.com" asp-for="Email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <label for="dob">Date of Birth *</label>
+            <div class="form-group">
+                <input type="date" id="dob" asp-for="DOB">
+                <span asp-validation-for="DOB" class="text-danger" ></span>
+            </div>
+
+            <label>Select Ticket Type *</label>
+            <div class="radio-group">
+                @{
+                    var ticketTypes = ViewData["TicketTypes"] as IEnumerable<TicketType>;
+                    if (ticketTypes != null && ticketTypes.Count() > 0)
+                    {
+                        foreach (var type in ticketTypes)
+                        {
+                            <div id="ticket-element-@type.Id" class="ticket-element">
+                                <input type="radio" id="ticket-@type.Id" asp-for="TicketTypeId" value="@type.Id" onclick="checkIfQuantityAvailable(@type.Id)">
+                                <p for="@type.Id">
+                                    @type.Name (£ @type.Price)
+                                    <span id="soldout-status-@type.Id" class="sold-out" style="color: red; display: none;">Sold out</span>
+                                    <span id="hurry-status-@type.Id" class="sold-out" style="color: orange; display: none;">Hurry selling fast</span>
+                                </p>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            <label for="promo-code">Promo Code</label>
+            <div class="promo-container">
+                <input type="text" id="promo-code" placeholder="Enter code" asp-for="@Model.PromoCodeStr">
+                <button type="button" class="promo-btn" onclick="applyPromoCode()">Apply</button>
+            </div>
+
+            <p class="discount-price" id="discount-display" style="color: green; margin-top: 10px;display:none"></p>
+            <p class="total-price">Total Price: <span id="total-price">£0</span></p>
+
+            <p class="note">Some more text will go here and so on.</p>
+            <button type="submit" id="btnSubmit" class="book-btn">Book</button>
+        </form>
+    </div>
+</div>
 <partial name="_validationscriptspartial"></partial>
 @section Scripts
 {

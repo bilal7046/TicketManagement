@@ -50,7 +50,7 @@ function resetAllStatuses() {
     submitButton.disabled = false; 
 }
 async function applyPromoCode() {
-    const promoCode = document.getElementById("promo").value.trim();
+    const promoCode = document.getElementById("promo-code").value.trim();
 
     if (!promoCode) {
         alert("Please enter a promo code.");
