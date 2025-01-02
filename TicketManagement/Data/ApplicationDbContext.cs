@@ -52,14 +52,14 @@ namespace TicketManagement.Data
                {
                    Id = 1,
                    Name = "Male - Early Bird",
-                   Price = 100m,
+                   Price = 15m,
                    AvailableQuantity = 100
                },
                new TicketType
                {
                    Id = 2,
                    Name = "Female - Early Bird",
-                   Price = 100m,
+                   Price = 25m,
                    AvailableQuantity = 10
                },
                new TicketType
@@ -67,6 +67,13 @@ namespace TicketManagement.Data
                    Id = 3,
                    Name = "Male - Standard Release",
                    Price = 15.00m,
+                   AvailableQuantity = 0
+               },
+               new TicketType
+               {
+                   Id = 4,
+                   Name = "Female - Standard Release",
+                   Price = 25.00m,
                    AvailableQuantity = 0
                }
            );

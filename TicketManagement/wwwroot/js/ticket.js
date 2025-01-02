@@ -5,23 +5,21 @@ async function checkIfQuantityAvailable(ticketId) {
         const response = await fetch(`/api/ticket/check-availability/${ticketId}`);
         const result = await response.json();
 
-        const ticketElement = document.getElementById(`ticket-element-${ticketId}`); // Entire ticket element
+        const ticketElement = document.getElementById(`ticket-element-${ticketId}`);
         const soldOutStatusSpan = document.getElementById(`soldout-status-${ticketId}`);
         const hurryStatusSpan = document.getElementById(`hurry-status-${ticketId}`);
-        const ticketRadioButton = document.getElementById(`ticket-${ticketId}`); // Radio button
+        const ticketRadioButton = document.getElementById(`ticket-${ticketId}`);
         const submitButton = document.getElementById('btnSubmit');
-      
 
         soldOutStatusSpan.style.display = "none";
         hurryStatusSpan.style.display = "none";
-       
 
         if (result.availableQuantity <= 0) {
             totalPrice = 0;
             soldOutStatusSpan.style.display = "inline";
-            ticketRadioButton.disabled = true; // Disable radio button      
-            submitButton.disabled = true; // Disable submit button      
-            ticketElement.classList.add("gray-out"); // Gray out the element
+            ticketRadioButton.disabled = true;
+            submitButton.disabled = true;
+            ticketElement.classList.add("gray-out");
         } else if (result.availableQuantity < 10) {
             hurryStatusSpan.style.display = "inline";
         }
@@ -43,11 +41,11 @@ function resetAllStatuses() {
     const ticketRadioButtons = document.querySelectorAll('input[name="TicketTypeId"]');
     const submitButton = document.getElementById('btnSubmit');
 
-    ticketElements.forEach(element => element.classList.remove("gray-out")); // Remove gray-out class
+    ticketElements.forEach(element => element.classList.remove("gray-out"));
     soldOutStatuses.forEach(span => span.style.display = "none");
     hurryStatuses.forEach(span => span.style.display = "none");
-    ticketRadioButtons.forEach(radio => radio.disabled = false); // Re-enable all radio buttons
-    submitButton.disabled = false; 
+    ticketRadioButtons.forEach(radio => radio.disabled = false);
+    submitButton.disabled = false;
 }
 async function applyPromoCode() {
     const promoCode = document.getElementById("promo-code").value.trim();
@@ -79,10 +77,7 @@ async function applyPromoCode() {
 
         const newTotal = totalPrice - discount;
         totalElement.textContent = newTotal.toFixed(2);
-
-        alert("Promo code applied successfully!");
     } catch (error) {
         console.error("Error applying promo code:", error);
-        alert("An error occurred. Please try again.");
     }
 }
