@@ -49,6 +49,11 @@ namespace TicketManagement.Controllers
                 return View();
             }
 
+            if (booking.TicketTypeId == 0)
+            {
+                ModelState.AddModelError("", "Please select ticket type");
+                return View();
+            }
             try
             {
                 using var client = _httpClientFactory.CreateClient();
