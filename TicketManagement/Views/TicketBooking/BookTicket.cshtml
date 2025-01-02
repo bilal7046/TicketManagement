@@ -39,17 +39,18 @@
             </div>
 
             <label>Select Ticket Type *</label>
-            <div class="radio-group">
+            <div class="radio-group"> 
+
                 @{
                     var ticketTypes = ViewData["TicketTypes"] as IEnumerable<TicketType>;
                     if (ticketTypes != null && ticketTypes.Count() > 0)
                     {
                         @foreach (var type in ticketTypes)
                         {
-                            <div id="ticket-element-@type.Id" class="ticket-element" style="display: flex; align-items: center; gap: 10px;">
-                                <input type="radio" id="ticket-@type.Id" asp-for="TicketTypeId" value="@type.Id" onclick="checkIfQuantityAvailable(@type.Id)">
+                            <div id="ticket-element-@type.Id" class="ticket-element ticket-container">
+                                <input type="radio" id="ticket-@type.Id" asp-for="TicketTypeId" class="ticket-item" value="@type.Id" onclick="checkIfQuantityAvailable(@type.Id)">
                                 <label for="ticket-@type.Id" >
-                                    @type.Name (£ @type.Price)
+                                    <span class="ticket-info"> @type.Name (£ @type.Price)</span>
                                     <span id="soldout-status-@type.Id" class="sold-out" style="color: red; display: none;">Sold out</span>
                                     <span id="hurry-status-@type.Id" class="sold-out" style="color: orange; display: none;">Hurry selling fast</span>
                                 </label>

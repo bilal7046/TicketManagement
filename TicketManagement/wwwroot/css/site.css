@@ -16,7 +16,7 @@ body {
 .container {
     background: #fff;
     width: 90%;
-    max-width: 700px;
+    max-width: 800px;
     margin: 20px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@ body {
 
 .header {
     position: relative;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('header-image.jpg') center/cover no-repeat;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.freepik.com/free-vector/modern-flowing-colorful-wave-banner-background_1035-19861.jpg?semt=ais_hybrid') center/cover no-repeat;
     height: 150px;
     color: #fff;
     display: flex;
@@ -109,16 +109,16 @@ input, select, .promo-btn {
 }
 
 .book-btn {
-    width: auto; /* Set width to auto to make the button smaller */
-    padding: 10px 40px; /* Adjust padding for a smaller button */
-    font-size: 16px; /* Adjust font size */
+    width: auto;
+    padding: 10px 40px;
+    font-size: 16px;
     background: #0056b3;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-    align-self: center; /* Align to the left */
+    align-self: center;
 }
 
     .book-btn:hover {
@@ -129,11 +129,9 @@ input, select, .promo-btn {
     font-size: 14px;
     color: #555;
     text-align: justify;
-    /* margin-top: 10px ; */
     margin: 30px 0;
 }
 
-/* Adjusting widths for email, date of birth, and promo code */
 .form-group {
     display: flex;
     gap: 10px;
@@ -143,10 +141,9 @@ input, select, .promo-btn {
 input[type="email"],
 input[type="date"],
 #promo-code {
-    width: 48%; /* Adjust the width as needed */
+    width: 48%;
 }
 
-/* Ensure input and button are aligned on small screens */
 @media (max-width: 768px) {
     .promo-btn {
         width: auto;
@@ -180,4 +177,24 @@ input[type="date"],
 .gray-out {
     opacity: 0.5;
     pointer-events: none;
+}
+
+.ticket-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.ticket-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.ticket-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
