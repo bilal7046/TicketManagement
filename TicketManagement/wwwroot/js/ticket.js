@@ -28,7 +28,7 @@ async function checkIfQuantityAvailable(ticketId) {
             totalPrice = result.price;
         }
 
-        $('#total-price').text(`$${totalPrice}`)
+        $('#total-price').text(`£${totalPrice}`)
     } catch (error) {
         console.error("Error checking ticket availability:", error);
     }
@@ -49,7 +49,12 @@ function resetAllStatuses() {
 }
 async function applyPromoCode() {
     const promoCode = document.getElementById("promo-code").value.trim();
+    const selectedTicketType = document.querySelector('input[name="TicketTypeId"]:checked');
 
+    if (!selectedTicketType) {
+        alert("Please select a ticket type first.");
+        return;
+    }
     if (!promoCode) {
         alert("Please enter a promo code.");
         return;
@@ -70,13 +75,13 @@ async function applyPromoCode() {
 
         // Update the discount display
         document.getElementById("discount-display").style.display = 'block'
-        document.getElementById("discount-display").textContent = `Discount: $${discount.toFixed(2)}`;
+        document.getElementById("discount-display").innerHTML = `<strong>Discount</strong>: £${discount.toFixed(2)}`;
 
         // Update the total price
         const totalElement = document.getElementById("total-price");
 
         const newTotal = totalPrice - discount;
-        totalElement.textContent = newTotal.toFixed(2);
+        totalElement.textContent = `£${newTotal.toFixed(2)}`;
     } catch (error) {
         console.error("Error applying promo code:", error);
     }

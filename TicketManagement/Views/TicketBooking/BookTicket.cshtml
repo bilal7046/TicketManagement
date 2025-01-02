@@ -5,76 +5,82 @@
 
 }
 
-<div class="container">
-    <div class="header">
-        <h1>Title</h1>
-    </div>
-    <div class="content">
+<div class="form-container">
+    <div class="card">
+        <div class="header">
+            <h1>Title</h1>
+
+        </div>
+        <h4 class="mb-4">New Year Event</h4>
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <p class="note">New Year Event</p>
-            <label for="first-name">Your Name *</label>
+            <label>Your Name *</label>
             <div style="display: flex; gap: 10px;">
                 <div style="display: flex; flex-direction: column;">
-                    <input type="text" id="first-name" placeholder="First Name" asp-for="FirstName">
+                    <input type="text" id="first-name" class="form-control" placeholder="First Name" asp-for="FirstName">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div style="display: flex; flex-direction: column;">
-                    <input type="text" id="last-name" placeholder="Last Name" asp-for="LastName">
+                    <input type="text" id="last-name" class="form-control" placeholder="Last Name" asp-for="LastName">
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
             </div>
 
 
-            <label for="email">E-mail *</label>
+            <label>E-mail *</label>
             <div class="form-group" style="display: flex; flex-direction: column;">
                 <input type="email" id="email" placeholder="email@example.com" asp-for="Email" class="form-control">
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            <label for="dob">Date of Birth *</label>
-            <div class="form-group">
-                <input type="date" id="dob" asp-for="DOB">
-                <span asp-validation-for="DOB" class="text-danger"></span>
-            </div>
+            <label>Date of Birth *</label>
+            <input type="date" class="form-control" value="2025-01-02" asp-for="DOB">
+            <span asp-validation-for="DOB" class="text-danger"></span>
 
             <label>Select Ticket Type *</label>
-            <div class="radio-group"> 
-
-                @{
-                    var ticketTypes = ViewData["TicketTypes"] as IEnumerable<TicketType>;
-                    if (ticketTypes != null && ticketTypes.Count() > 0)
-                    {
-                        @foreach (var type in ticketTypes)
+            <div class="ticket-options">
+                <div class="form-check">
+                    @{
+                        var ticketTypes = ViewData["TicketTypes"] as IEnumerable<TicketType>;
+                        if (ticketTypes != null && ticketTypes.Count() > 0)
                         {
-                            <div id="ticket-element-@type.Id" class="ticket-element ticket-container">
-                                <input type="radio" id="ticket-@type.Id" asp-for="TicketTypeId" class="ticket-item" value="@type.Id" onclick="checkIfQuantityAvailable(@type.Id)">
-                                <label for="ticket-@type.Id" >
-                                    <span class="ticket-info"> @type.Name (£ @type.Price)</span>
-                                    <span id="soldout-status-@type.Id" class="sold-out" style="color: red; display: none;">Sold out</span>
-                                    <span id="hurry-status-@type.Id" class="sold-out" style="color: orange; display: none;">Hurry selling fast</span>
-                                </label>
-                            </div>
+                            @foreach (var type in ticketTypes)
+                            {
+                                <div id="ticket-element-@type.Id" class="ticket-element ticket-container">
+                                    <input type="radio" id="ticket-@type.Id" asp-for="TicketTypeId" class="ticket-item form-check-input" value="@type.Id" onclick="checkIfQuantityAvailable(@type.Id)">
+                                    <label for="ticket-@type.Id" class="form-check-label">
+                                        <span class="ticket-info"> @type.Name (£ @type.Price)</span>
+                                        <span id="soldout-status-@type.Id" class="sold-out" style="color: red; display: none;">Sold out</span>
+                                        <span id="hurry-status-@type.Id" class="sold-out" style="color: orange; display: none;">Hurry selling fast</span>
+                                    </label>
+                                </div>
+                            }
+
                         }
-
                     }
-                }
+
+                </div>
+
             </div>
 
-            <label for="promo-code">Promo Code</label>
-            <div class="promo-container">
-                <input type="text" id="promo-code" placeholder="Enter code" asp-for="@Model.PromoCodeStr">
-                <button type="button" class="promo-btn" onclick="applyPromoCode()">Apply</button>
+            <label>Promo Code</label>
+            <div class="promo-group d-flex">
+                <input type="text" class="form-control me-2" id="promo-code" placeholder="Enter code" asp-for="@Model.PromoCodeStr">
+                <button type="button" class="btn btn-primary apply-btn h-100" onclick="applyPromoCode()">Apply</button>
             </div>
 
-            <p class="discount-price" id="discount-display" style="color: green; margin-top: 10px;display:none"></p>
-            <p class="total-price">Total Price: <span id="total-price">£0</span></p>
+            <p id="discount-display" style="display:none"></p>
+            <p><strong>Total Price: </strong><span id="total-price">£0</span></p>
+            <p class="text-muted">Some more text will go here and so on.</p>
 
-            <p class="note">Some more text will go here and so on.</p>
-            <button type="submit" id="btnSubmit" class="book-btn">Book</button>
+            <div class="text-center">
+                <button type="submit" id="btnSubmit" class="btn btn-primary book-btn">Book</button>
+            </div>
         </form>
     </div>
 </div>
+
+
 <partial name="_validationscriptspartial"></partial>
 @section Scripts
 {
